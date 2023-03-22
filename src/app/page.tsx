@@ -32,7 +32,7 @@ export default function Home() {
     setIsLoading(false);
     setData(completion.data.choices[0].message);
   };
-  console.log(data);
+  console.log(process.env.REACT_APP_OPENAI_API_KEY);
 
   return (
     <main className={`bg-vanilla h-screen flex items-center m-5`}>
