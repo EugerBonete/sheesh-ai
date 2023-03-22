@@ -1,6 +1,5 @@
 "use client";
 
-import useCollapse from "react-collapsed";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 import { Configuration, OpenAIApi } from "openai";
 import { useState, FormEvent } from "react";
@@ -12,7 +11,6 @@ type Response = {
 };
 
 export default function Home() {
-  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
   const [input, setInput] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<Response>();
@@ -32,7 +30,6 @@ export default function Home() {
     setIsLoading(false);
     setData(completion.data.choices[0].message);
   };
-  console.log(process.env.REACT_APP_OPENAI_API_KEY);
 
   return (
     <main
@@ -47,26 +44,6 @@ export default function Home() {
         </p>
       </div>
       <form onSubmit={onSumbitHandler} className="flex flex-col gap-5 w-full">
-        <div
-          style={{ color: "white" }}
-          className="shadow-lg px-4 py-2 text-2xl bg-eerieBlack rounded-lg"
-        >
-          <button {...getToggleProps()} className="w-full">
-            <div className="flex justify-between">
-              <div>How to use?</div>
-              <div className="py-2">
-                {isExpanded ? <AiOutlineCaretUp /> : <AiOutlineCaretDown />}
-              </div>
-            </div>
-          </button>
-          <section {...getCollapseProps()}>
-            <p className="ml-5 my-4 text-[1.3rem]">
-              Simply type in your text into the input field below and click on
-              the "generate" button. Then, wait for the results to appear.
-              Enjoy!
-            </p>
-          </section>
-        </div>
         <textarea
           id="message"
           rows={4}
