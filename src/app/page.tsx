@@ -35,8 +35,10 @@ export default function Home() {
   console.log(process.env.REACT_APP_OPENAI_API_KEY);
 
   return (
-    <main className={`bg-vanilla h-screen flex items-center m-5`}>
-      <div className="flex flex-col gap-10  w-full">
+    <main
+      className={`bg-vanilla h-screen flex flex-col md:flex-row items-center m-5 gap-10`}
+    >
+      <div className="flex flex-col gap-10 w-full">
         <h1 className="text-black font-bold text-7xl mx-10 text-center">
           Sheesh AI
         </h1>
