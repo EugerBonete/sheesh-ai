@@ -1,9 +1,18 @@
 "use client";
 
-import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
+import { AiOutlineCaretDown, AiOutlineCaretRight } from "react-icons/ai";
 import { Configuration, OpenAIApi } from "openai";
 import { useState, FormEvent } from "react";
 import { ColorRing } from "react-loader-spinner";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel,
+} from "react-accessible-accordion";
+import "react-accessible-accordion/dist/fancy-example.css";
+import ImageConverter from "./components/ImageConverter";
 
 type Response = {
   role: string;
@@ -13,6 +22,7 @@ type Response = {
 export default function Home() {
   const [input, setInput] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [data, setData] = useState<Response>();
 
   const formHandler = async () => {};
@@ -36,14 +46,43 @@ export default function Home() {
       className={`bg-vanilla h-screen flex flex-col md:flex-row items-center m-5 gap-10`}
     >
       <div className="flex flex-col gap-10 w-full">
-        <h1 className="text-black font-bold text-7xl mx-10 text-center">
-          Sheesh AI
+        <h1 className="text-black font-bold text-7xl md:text-5xl mx-10 text-center">
+          Effortlessly get answers from AI technology.
         </h1>
         <p className="text-center text-2xl">
-          Effortlessly rephrase your sentences with the power of AI technology.
+          Sheesh AI, The AI Answer Generator for Quick Responses
         </p>
+        {/* <ImageConverter /> */}
       </div>
       <form onSubmit={onSumbitHandler} className="flex flex-col gap-5 w-full">
+        <Accordion
+          allowZeroExpanded
+          className="bg-semiBlack rounded-lg text-xl"
+          onChange={() => setIsExpanded(!isExpanded)}
+          style={{ color: "white" }}
+        >
+          <AccordionItem>
+            <AccordionItemHeading>
+              <AccordionItemButton
+                className="bg-eerieBlack px-4 py-2 rounded-lg text-2xl flex justify-start items-center gap-3"
+                style={{ color: "white" }}
+              >
+                <div>
+                  {" "}
+                  {isExpanded ? (
+                    <AiOutlineCaretDown />
+                  ) : (
+                    <AiOutlineCaretRight />
+                  )}{" "}
+                </div>
+                How to use Sheesh AI?
+              </AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <p>Add your prompt to the textfield 👇 and hit generate.</p>
+            </AccordionItemPanel>
+          </AccordionItem>
+        </Accordion>
         <textarea
           id="message"
           rows={4}
