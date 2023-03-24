@@ -25,12 +25,12 @@ export default function Home() {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [data, setData] = useState<Response>();
 
-  const formHandler = async () => {};
   const onSumbitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     const configuration = new Configuration({
-      apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+      organization: "org-xREJpct1suUf3UfeWG2NwBY4",
+      apiKey: process.env.OPENAI_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
     const completion = await openai.createChatCompletion({
@@ -40,16 +40,16 @@ export default function Home() {
     setIsLoading(false);
     setData(completion.data.choices[0].message);
   };
-
+  console.log(process.env.OPENAI_API_KEY);
   return (
     <main
       className={`bg-vanilla h-screen flex flex-col md:flex-row items-center m-5 gap-10`}
     >
       <div className="flex flex-col gap-10 w-full">
-        <h1 className="text-black font-bold text-7xl md:text-5xl mx-10 text-center">
+        <h1 className="text-black font-bold  text-4xl md:text-5xl lg:text-6xl mx-10 text-center">
           Effortlessly get answers from AI technology.
         </h1>
-        <p className="text-center text-2xl">
+        <p className="text-center text-xl md:text-2xl">
           Sheesh AI, The AI Answer Generator for Quick Responses
         </p>
         {/* <ImageConverter /> */}
