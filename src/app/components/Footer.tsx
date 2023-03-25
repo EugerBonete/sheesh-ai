@@ -1,38 +1,31 @@
 import React from "react";
+import { AiFillGithub } from "react-icons/ai";
+import { BsFacebook } from "react-icons/bs";
+import { FaFacebookMessenger } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className=" bg-white rounded-lg shadow m-4 dark:bg-gray-800 mt-[10rem]">
-      <div className="w-full mx-auto container md:p-6 p-4 md:flex md:items-center md:justify-between">
-        <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-          © 2023{" "}
-          <a href="https://flowbite.com/" className="hover:underline">
-            Flowbite™
+    <footer className="bg-eerieBlack px-10 py-4 mt-[10rem]">
+      <div className="md:flex md:items-center md:justify-between">
+        <div>
+          <span className="text-lg text-white sm:text-center pb-1 mb-2 border-b-4 border-slate-500">
+            © 2023 Sheesh AI. All Rights Reserved.
+          </span>
+          <p className="mt-1">Designed and developed by Euger Bonete</p>
+        </div>
+        <div className=" text-lg flex mt-4 space-x-6 sm:justify-center md:mt-0">
+          <a href="#" className="text-gray-400hover:text-white">
+            <AiFillGithub />
           </a>
-          . All Rights Reserved.
-        </span>
-        <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-          <li>
-            <a href="#" className="mr-4 hover:underline md:mr-6 ">
-              About
-            </a>
-          </li>
-          <li>
-            <a href="#" className="mr-4 hover:underline md:mr-6">
-              Privacy Policy
-            </a>
-          </li>
-          <li>
-            <a href="#" className="mr-4 hover:underline md:mr-6">
-              Licensing
-            </a>
-          </li>
-          <li>
-            <a href="#" className="hover:underline">
-              Contact
-            </a>
-          </li>
-        </ul>
+
+          <a href="#" className="text-gray-400hover:text-white">
+            <BsFacebook />
+          </a>
+
+          <a href="#" className="text-gray-400hover:text-white">
+            <FaFacebookMessenger />
+          </a>
+        </div>
       </div>
     </footer>
   );

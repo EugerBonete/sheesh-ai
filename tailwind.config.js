@@ -12,7 +12,7 @@ module.exports = {
     extend: {
       colors: {
         semiBlack: "#3B4343",
-        eerieBlack: "#171D1C",
+        eerieBlack: "#343541",
         vanilla: "#E4D6A7",
       },
     },

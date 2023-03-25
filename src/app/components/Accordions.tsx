@@ -23,7 +23,7 @@ export default function Accordions() {
     },
     {
       Q: "How do I use SheeshAI?",
-      A: "To use SheeshAI, simply click on the input field and add your query or prompt. Once you have entered your query, click on the generate button and SheeshAI will generate a response based on the data it has been trained on. You can continue to refine your query and generate responses until you find the information you are looking for.",
+      A: "To use SheeshAI, simply click on the input field and add your query or prompt. Once you have entered your query, click on the generate button and SheeshAI will generate a response.",
     },
   ];
 
@@ -37,7 +37,7 @@ export default function Accordions() {
   return (
     <Accordion
       allowZeroExpanded
-      className="rounded-lg text-xl flex flex-col gap-5"
+      className="rounded-lg text-xl flex flex-col gap-2 pl-4"
       style={{ color: "white" }}
     >
       {accordionData.map((data, index) => {
@@ -64,7 +64,7 @@ export default function Accordions() {
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel className="bg-semiBlack overflow-hidden rounded-b-lg p-4">
-              <p className="text-md md:text-xl">{data.A}</p>
+              <p className="text-sm md:text-lg">{data.A}</p>
             </AccordionItemPanel>
           </AccordionItem>
         );

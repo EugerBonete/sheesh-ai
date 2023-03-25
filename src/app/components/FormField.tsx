@@ -1,10 +1,14 @@
 import { Configuration, OpenAIApi } from "openai";
 import { useState, FormEvent } from "react";
-import { ColorRing } from "react-loader-spinner";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { getRandomPercentage } from "../utils/randomPercentage";
 import Typewriter from "typewriter-effect";
+import CustomButton from "./Button";
+import GreenBtn from "./GreenBtn";
+import RedBtn from "./RedBtn";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { notify } from "../layout";
 
 type Response = {
   role: string;
@@ -35,86 +39,107 @@ export default function FormField() {
 
   return (
     <form
+      id="myTextarea"
       onSubmit={onSumbitHandler}
-      className={`flex flex-col gap-4 w-full ${
+      className={`bg-eerieBlack px-10 font-mono rounded-lg flex w-full flex-col lg:flex-row gap-10 justify-center py-[4rem] md:py-[8rem] ${
         isLoading || (data?.content ? "" : "justify-center")
       }`}
     >
-      <h1 className="text-3xl font-semibold">Enter a prompt to start 👇</h1>
-      <textarea
-        id="message"
-        rows={6}
-        className="resize-none block p-2.5 w-full text-2xl bg-semiBlack text-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Write your prompt here..."
-        onChange={(e) => setInput(e.target.value)}
-        value={input}
-      />
+      <div className="flex-1 flex gap-8 flex-col items-center">
+        <h1 className=" font-semibold text-center text-2xl md:text-3xl  self-start">
+          <Typewriter
+            options={{
+              strings: "Enter a prompt 👇 to start",
+              autoStart: true,
+              delay: 50,
+            }}
+          />
+        </h1>
+        <textarea
+          rows={8}
+          className="resize-none  block p-3 w-full text-xl md:text-2xl bg-semiBlack text-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Write your prompt here..."
+          onChange={(e) => setInput(e.target.value)}
+          value={input}
+        />
+        <CustomButton isLoading={isLoading} title="Generate" />
+      </div>
 
-      <button
-        className={`bg-slate-200 text-eerieBlack px-4 ${
-          isLoading ? "pb-3 pt-2" : "py-2"
-        } rounded-lg self-end text-2xl flex disabled:opacity-50 disabled:cursor-not-allowed`}
-        disabled={input.length < 5 || isLoading}
-      >
-        <p>{isLoading ? "Generating..." : "Generate"}</p>
+      <div className="flex-1 flex gap-8 flex-col">
+        {/* LOADING STATE */}
         {isLoading && (
-          <ColorRing
-            visible={true}
-            height="40"
-            width="40"
-            ariaLabel="blocks-loading"
-            wrapperClass="blocks-wrapper"
-            colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
-          />
-        )}
-      </button>
-      {isLoading && (
-        <>
-          <h1 className="text-3xl font-semibold flex">
-            Generationg response{" "}
-            <span>
-              <Typewriter
-                options={{
-                  strings: "...",
-                  autoStart: true,
-                  loop: true,
-                  cursor: "",
-                }}
-              />
-            </span>
-          </h1>
-          <div className="p-2.5 w-full text-2xl bg-semiBlack text-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-            {Array(5)
-              .fill(undefined)
-              .map((skeleton, index) => (
-                <Skeleton
-                  key={index}
-                  baseColor="#5B6363"
-                  highlightColor="#fff"
-                  width={getRandomPercentage()}
+          <>
+            <h1 className="font-semibold flex text-2xl md:text-3xl self-start">
+              Generating response{" "}
+              <span>
+                <Typewriter
+                  options={{
+                    strings: "...",
+                    autoStart: true,
+                    loop: true,
+                    cursor: "",
+                  }}
                 />
-              ))}
+              </span>
+            </h1>
+            <div className="p-3 w-full text-2xl bg-semiBlack text-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
+              {Array(8)
+                .fill(undefined)
+                .map((skeleton, index) => (
+                  <Skeleton
+                    key={index}
+                    baseColor="#5B6363"
+                    highlightColor="#fff"
+                    width={getRandomPercentage()}
+                  />
+                ))}
+            </div>
+          </>
+        )}
+        {/* NO PROMPT STATE */}
+        {!isLoading && !data?.content && (
+          <>
+            <h1 className="font-semibold text-center text-2xl md:text-3xl  self-start">
+              Results:
+            </h1>
+            <textarea
+              id="message"
+              rows={8}
+              className="resize-none block p-2.5 w-full text-2xl bg-semiBlack text-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Results will show up here..."
+              onChange={(e) => setInput(e.target.value)}
+              value={data?.content.replace(/\n\n/g, "")}
+              readOnly
+            />
+          </>
+        )}
+        {/* DATA LOADED STATE */}
+        {!isLoading && data?.content && (
+          <div className="flex-1 flex gap-8 flex-col items-center">
+            <h1 className="text-center text-2xl md:text-3xl  self-start">
+              Results:
+            </h1>
+            <textarea
+              id="message"
+              rows={8}
+              className="resize-none block p-2.5 w-full text-2xl bg-semiBlack text-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Warming up the hamsters, to fetch your data..."
+              onChange={(e) => setInput(e.target.value)}
+              value={data?.content.replace(/\n\n/g, "")}
+              readOnly
+            />
+            <div className="flex gap-10">
+              <CopyToClipboard text={data?.content.replace(/\n\n/g, "") || ""}>
+                <GreenBtn title="Copy" onClick={notify} />
+              </CopyToClipboard>
+              <RedBtn
+                title="Delete"
+                onClick={() => setData({ role: "", content: "" })}
+              />
+            </div>
           </div>
-        </>
-      )}
-
-      {!isLoading && data?.content && (
-        <>
-          <h1 className="text-3xl font-semibold">Results:</h1>
-          <textarea
-            id="message"
-            rows={6}
-            className="resize-none block p-2.5 w-full text-2xl bg-semiBlack text-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Warming up the hamsters, to fetch your data..."
-            onChange={(e) => setInput(e.target.value)}
-            value={
-              data?.content.replace(/\n\n/g, "") ||
-              "Warming up the hamsters, to fetch your data..."
-            }
-            readOnly
-          />
-        </>
-      )}
+        )}
+      </div>
     </form>
   );
 }
