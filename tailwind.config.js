@@ -9,12 +9,13 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors: {
-      semiBlack: "#3B4343",
-      eerieBlack: "#171D1C",
-      vanilla: "#E4D6A7",
+    extend: {
+      colors: {
+        semiBlack: "#3B4343",
+        eerieBlack: "#171D1C",
+        vanilla: "#E4D6A7",
+      },
     },
-    extend: {},
   },
   plugins: [],
 };
