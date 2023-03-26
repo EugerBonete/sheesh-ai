@@ -8,7 +8,7 @@ import CustomButton from "./Button";
 import GreenBtn from "./GreenBtn";
 import RedBtn from "./RedBtn";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { notify } from "../layout";
+import { notify } from "../page";
 
 type Response = {
   role: string;
